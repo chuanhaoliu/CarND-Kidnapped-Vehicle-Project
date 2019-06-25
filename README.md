@@ -139,4 +139,13 @@ The things the grading code is looking for are:
 
 2. **Performance**: your particle filter should complete execution within the time of 100 seconds.
 
-
+For each message received by event handler, the following processes will be carried out:
+1. Initialize the particle filter, including the number of particles
+2. If the particle filter is initialized, predict the vehicle's next state based on previous (noiseless control) data
+3. Receive noisy observation data
+4. Update the weights of each particle using a multi-variate Gaussian distribution
+4.1. Coordination transformation for all observations from vechicle to map coordinate system.
+4.2. Find the predicted measurement that is closest to each observed measurement and assign the observed measurement to this particular landmark within sensor range.
+4.3. Multiple all the probabilities using mult-variate Gaussian algorithm as the final weight to be updated for the curresponding particle.
+5. Resample particles with replacement with probability proportional to their weight, using discrete distribution method.
+6. Calculate and output the average weighted error of the particle filter over all time steps.
